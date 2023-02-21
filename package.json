@@ -19,7 +19,7 @@
     "scripts": {
         "build": "tsc",
         "watch": "tsc --watch",
-        "develop": "rm -rf lib/ && npm link react react-dom && npm run build"
+        "develop": "rm -rf lib/ && npm link react react-dom && npm run build && npm run watch"
     },
     "repository": {
         "type": "git",
