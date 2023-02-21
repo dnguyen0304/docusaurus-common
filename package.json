@@ -3,6 +3,7 @@
     "version": "0.0.0",
     "description": "Docusaurus common library.",
     "exports": {
+        ".": "./lib/index.js",
         "./annotate/anchor": "./lib/annotate/anchor/index.js"
     },
     "dependencies": {
