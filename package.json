@@ -2,8 +2,10 @@
     "name": "@docupotamus/docusaurus-lib-common",
     "version": "0.0.0",
     "description": "Docusaurus common library.",
-    "main": "lib/index.js",
-    "types": "lib/docusaurus-lib-common.d.ts",
+    "exports": {
+        ".": "./lib/index.js",
+        "./annotate/anchor": "./lib/annotate/anchor/index.js"
+    },
     "dependencies": {
     },
     "devDependencies": {
