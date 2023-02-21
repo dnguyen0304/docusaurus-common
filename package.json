@@ -1,0 +1,47 @@
+{
+    "name": "@docupotamus/docusaurus-lib-common",
+    "version": "0.0.0",
+    "description": "Docusaurus common library.",
+    "main": "lib/index.js",
+    "types": "lib/docusaurus-lib-common.d.ts",
+    "dependencies": {
+    },
+    "devDependencies": {
+        "typescript": "^4.7.4"
+    },
+    "peerDependencies": {
+        "react": "^16.8.4 || ^17.0.0",
+        "react-dom": "^16.8.4 || ^17.0.0"
+    },
+    "engines": {
+        "node": ">=16.14"
+    },
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc --watch",
+        "develop": "rm -rf lib/ && npm link react react-dom && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dnguyen0304/docusaurus-lib-common.git"
+    },
+    "keywords": [
+        "react",
+        "docusaurus",
+        "docusaurus-plugin",
+        "docusaurus-theme",
+        "static site generator",
+        "documentation",
+        "open source",
+        "plugins",
+        "themes",
+        "markdown",
+        "mdx"
+    ],
+    "author": "Duy Nguyen <dnguyen0304@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dnguyen0304/docusaurus-lib-common/issues"
+    },
+    "homepage": "https://github.com/dnguyen0304/docusaurus-lib-common#readme"
+}
