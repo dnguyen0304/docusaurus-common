@@ -40,6 +40,8 @@
                 "name": "typescript-plugin-css-modules",
             },
         ],
+        /* JavaScript Support */
+        "allowJs": true,
     },
     "include": [
         "src/**/*"

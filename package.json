@@ -4,10 +4,12 @@
     "description": "Docusaurus common library.",
     "exports": {
         ".": "./lib/index.js",
-        "./annotate/anchor": "./lib/annotate/anchor/index.js"
+        "./annotate/anchor": "./lib/annotate/anchor/index.js",
+        "./datetime": "./lib/datetime/index.js"
     },
     "dependencies": {
-        "approx-string-match": "^2.0.0"
+        "approx-string-match": "^2.0.0",
+        "dayjs": "^1.11.7"
     },
     "devDependencies": {
         "typescript": "^4.7.4"
