@@ -4,6 +4,7 @@
     "description": "Docusaurus common library.",
     "exports": {
         ".": "./lib/index.js",
+        "./annotate": "./lib/annotate/index.js",
         "./annotate/anchor": "./lib/annotate/anchor/index.js",
         "./contexts": "./lib/contexts/index.js",
         "./datetime": "./lib/datetime/index.js",
