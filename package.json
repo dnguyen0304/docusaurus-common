@@ -5,6 +5,7 @@
     "exports": {
         ".": "./lib/index.js",
         "./annotate/anchor": "./lib/annotate/anchor/index.js",
+        "./contexts": "./lib/contexts/index.js",
         "./datetime": "./lib/datetime/index.js",
         "./types": "./lib/types/index.js"
     },
