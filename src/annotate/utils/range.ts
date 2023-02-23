@@ -38,3 +38,112 @@ export const getSelectionRange = (document: Document): Range | null => {
     }
     return range;
 };
+
+/**
+ * Returns true if the start point of a selection occurs after the end point,
+ * in document order.
+ */
+const isSelectionBackwards = (selection: Selection): boolean => {
+    if (selection.focusNode === selection.anchorNode) {
+        return selection.focusOffset < selection.anchorOffset;
+    }
+    const range = selection.getRangeAt(0);
+    // Does not work correctly on iOS when selecting nodes backwards.
+    // See: https://bugs.webkit.org/show_bug.cgi?id=220523
+    return range.startContainer === selection.focusNode;
+};
+
+/**
+ * Returns true if any part of node lies within range.
+ */
+const rangeContainsNode = (range: Range, node: Node): boolean => {
+    try {
+        const length = node.nodeValue?.length ?? node.childNodes.length;
+        const nodeStartIsBeforeRangeEnd = range.comparePoint(node, 0) <= 0;
+        const nodeEndIsAfterRangeStart = range.comparePoint(node, length) >= 0;
+        return nodeStartIsBeforeRangeEnd && nodeEndIsAfterRangeStart;
+    } catch (e) {
+        // Range.comparePoint fails if the range and node do not share an
+        // ancestor or if node is a DOCUMENT_TYPE_NODE.
+        return false;
+    }
+};
+
+/**
+ * Iterate over all Node(s) which overlap range in document order and invoke
+ * callback for each of them.
+ */
+const forEachNodeInRange = (range: Range, callback: (node: Node) => void) => {
+    const root = range.commonAncestorContainer;
+    const nodeIter = (root.ownerDocument ?? document).createNodeIterator(
+        root,
+        NodeFilter.SHOW_ALL,
+    );
+
+    let currentNode;
+    while (currentNode = nodeIter.nextNode()) {
+        if (rangeContainsNode(range, currentNode)) {
+            callback(currentNode);
+        }
+    }
+};
+
+/**
+ * Returns the bounding rectangles of non-whitespace text nodes in range.
+ */
+const getTextBoundingBoxes = (range: Range): Array<DOMRect> => {
+    const whitespaceOnly = /^\s*$/;
+    const textNodes: Text[] = [];
+    forEachNodeInRange(range, node => {
+        if (
+            node.nodeType === Node.TEXT_NODE &&
+            !(/** @type {string} */ (node.textContent).match(whitespaceOnly))
+        ) {
+            textNodes.push(node as Text);
+        }
+    });
+
+    let rects: DOMRect[] = [];
+    textNodes.forEach(node => {
+        const nodeRange = node.ownerDocument.createRange();
+        nodeRange.selectNodeContents(node);
+        if (node === range.startContainer) {
+            nodeRange.setStart(node, range.startOffset);
+        }
+        if (node === range.endContainer) {
+            nodeRange.setEnd(node, range.endOffset);
+        }
+        if (nodeRange.collapsed) {
+            // If the range ends at the start of this text node or starts at the
+            // end of this node then do not include it.
+            return;
+        }
+        // Measure the range and translate from viewport to document
+        // coordinates.
+        const viewportRects = Array.from(nodeRange.getClientRects());
+        nodeRange.detach();
+        rects = rects.concat(viewportRects);
+    });
+    return rects;
+};
+
+/**
+ * Returns the rectangle, in viewport coordinates, for the line of text
+ * containing the focus point of a Selection.
+ *
+ * Returns null if the selection is empty.
+ */
+export const selectionFocusRect = (selection: Selection): DOMRect | null => {
+    if (selection.isCollapsed) {
+        return null;
+    }
+    const textBoxes = getTextBoundingBoxes(selection.getRangeAt(0));
+    if (textBoxes.length === 0) {
+        return null;
+    }
+    if (isSelectionBackwards(selection)) {
+        return textBoxes[0] ?? null;
+    } else {
+        return textBoxes[textBoxes.length - 1] ?? null;
+    }
+};
