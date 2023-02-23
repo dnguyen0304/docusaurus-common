@@ -95,9 +95,10 @@ const getTextBoundingBoxes = (range: Range): Array<DOMRect> => {
     const whitespaceOnly = /^\s*$/;
     const textNodes: Text[] = [];
     forEachNodeInRange(range, node => {
+        // TODO(dnguyen0304): Fix usage of non-null assertion operator.
         if (
             node.nodeType === Node.TEXT_NODE &&
-            !(/** @type {string} */ (node.textContent).match(whitespaceOnly))
+            !(/** @type {string} */ (node.textContent!).match(whitespaceOnly))
         ) {
             textNodes.push(node as Text);
         }
