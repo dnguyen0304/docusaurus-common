@@ -56,7 +56,7 @@ const isSelectionBackwards = (selection: Selection): boolean => {
 /**
  * Returns true if any part of node lies within range.
  */
-const rangeContainsNode = (range: Range, node: Node): boolean => {
+export const rangeContainsNode = (range: Range, node: Node): boolean => {
     try {
         const length = node.nodeValue?.length ?? node.childNodes.length;
         const nodeStartIsBeforeRangeEnd = range.comparePoint(node, 0) <= 0;
