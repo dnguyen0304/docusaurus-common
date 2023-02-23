@@ -31,9 +31,11 @@ interface Positioner {
 };
 
 enum ArrowDirection {
-    // Position the tooltip below the selection with the arrow pointing up.
+    // Position the tooltip below the selection with the arrow pointing upwards.
     Up = 'up',
-    // Position the tooltip above the selection with the arrow pointing down.
+
+    // Position the tooltip above the selection with the arrow pointing
+    // downwards.
     Down = 'down',
 };
 
