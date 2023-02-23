@@ -67,9 +67,6 @@ export class SelectionTopCenterPositioner implements Positioner {
      * Calculate the XYZ viewport coordinates for the tooltip's position.
      * 
      * The direction of its arrow is always down.
-     *
-     * @param   selectionRect Selection rect.
-     * @return  Position
      */
     position(selectionRect: DOMRect): Position {
         const { x, y, width } = selectionRect;
@@ -77,10 +74,8 @@ export class SelectionTopCenterPositioner implements Positioner {
         // TODO: Fix incorrect position when selecting LTR vs. RTL.
         // TODO: Fix incorrect position when selecting across multiple nodes.
         const top = y + window.scrollY - this.arrowGap;
-
         // Fallback to an arbitrary large number (2^15).
-        const zIndex = 32768
-
+        const zIndex = 32768;
         return {
             left,
             top,
