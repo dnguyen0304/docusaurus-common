@@ -28,30 +28,32 @@ const ARROW_GAP: number = 20;
 
 interface Positioner {
     position: (selectionRect: DOMRect, isRtlSelection: boolean) => Position;
-}
+};
 
 enum ArrowDirection {
     // Position the tooltip below the selection with the arrow pointing up.
     Up = 'up',
     // Position the tooltip above the selection with the arrow pointing down.
     Down = 'down',
-}
+};
 
-type Position = Readonly<{
+interface Position {
     // Horizontal offset from left edge of viewport.
-    left: number;
+    readonly left: number;
+
     // Vertical offset from top edge of viewport.
-    top: number;
+    readonly top: number;
+
     // Max z-index.
-    zIndex: number;
+    readonly zIndex: number;
+
     // Direction the tooltip's arrow should be pointing. The tooltip's position
     // relative to the selection is the opposite of this.
-    arrowDirection: ArrowDirection;
-}>
+    readonly arrowDirection: ArrowDirection;
+};
 
 // Positions the tooltip at the top-center edge of the selection.
-class SelectionTopCenterPositioner implements Positioner {
-
+export class SelectionTopCenterPositioner implements Positioner {
     private arrowGap: number;
 
     constructor(arrowGap: number = ARROW_GAP) {
@@ -84,8 +86,4 @@ class SelectionTopCenterPositioner implements Positioner {
             arrowDirection: ArrowDirection.Down,
         };
     }
-}
-
-export {
-    SelectionTopCenterPositioner,
 };
