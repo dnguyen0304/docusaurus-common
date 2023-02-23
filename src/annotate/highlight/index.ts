@@ -7,9 +7,9 @@ import { rangeContainsNode } from '../utils/range';
 
 // const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
-type HighlightProps = {
+interface HighlightProps {
     // Associated SVG rect drawn to represent this highlight (in PDFs)
-    svgHighlight?: SVGRectElement;
+    readonly svgHighlight?: SVGRectElement;
 };
 
 export type HighlightElement = HTMLElement & HighlightProps;
