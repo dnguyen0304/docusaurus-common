@@ -197,24 +197,24 @@ const wholeTextNodesInRange = (range: Range): Text[] => {
     }
 
     return textNodes;
-}
+};
 
 /**
- * Wraps the DOM Nodes within the provided range with a highlight
- * element of the specified class and returns the highlight Elements.
+ * Wraps the DOM Nodes within the provided range with a highlight element of the
+ * specified class and returns the highlight Elements.
  *
  * @param range - Range to be highlighted
  * @param [cssClass] - CSS class(es) to add to the highlight elements
- * @return Elements wrapping text in `normedRange` to add a highlight effect
+ * @return Elements wrapping text in normedRange to add a highlight effect
  */
-export function highlightRange(
+export const highlightRange = (
     range: Range,
     cssClass?: string
-): HighlightElement[] {
+): HighlightElement[] => {
     const textNodes = wholeTextNodesInRange(range);
 
-    // Group text nodes into spans of adjacent nodes. If a group of text nodes are
-    // adjacent, we only need to create one highlight element for the group.
+    // Group text nodes into spans of adjacent nodes. If a group of text nodes
+    // are adjacent, we only need to create one highlight element for the group.
     let textNodeSpans: Text[][] = [];
     let prevNode: Node | null = null;
     let currentSpan = null;
@@ -238,10 +238,10 @@ export function highlightRange(
         span.some(node => !whitespace.test(node.data))
     );
 
-    // Wrap each text node span with a `<hypothesis-highlight>` element.
+    // Wrap each text node span with a <hypothesis-highlight> element.
     const highlights: HighlightElement[] = [];
     textNodeSpans.forEach(nodes => {
-        // A custom element name is used here rather than `<span>` to reduce the
+        // A custom element name is used here rather than <span> to reduce the
         // likelihood of highlights being hidden by page styling.
 
         const highlightEl = document.createElement('hypothesis-highlight');
@@ -259,7 +259,7 @@ export function highlightRange(
     });
 
     return highlights;
-}
+};
 
 // /**
 //  * Replace a child `node` with `replacements`.
